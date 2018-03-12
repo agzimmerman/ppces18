@@ -1,16 +1,31 @@
 #include <stdio.h>
-// TODO: Make the MPI functions and constants available
+#include <mpi.h>
 
 int main (int argc, char* argv[])
 {
-    // TODO: Initialise the MPI library
+    // Initialise the MPI library
+    int ierr;
 
-    // TODO: Obtain the process ID and the number of processes
+    ierr = MPI_Init(&argc, &argv);
 
-    // TODO: Display the process ID and the number of processes
-    printf("Hello world from rank ? of ?\n");
 
-    // TODO: Deinitialise the MPI library
+    // Obtain the process ID and the number of processes
+    int numberOfProcs;
+
+    int rank;
+
+    ierr = MPI_Comm_size(MPI_COMM_WORLD, &numberOfProcs);
+    
+    ierr = MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+
+    // Display the process ID and the number of processes
+    printf("Hello world from rank %u of %u\n", rank, numberOfProcs);
+
+
+    // Deinitialise the MPI library
+    MPI_Finalize();
+
 
     return 0;
 }
