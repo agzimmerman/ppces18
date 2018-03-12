@@ -51,7 +51,7 @@ int main(int argc, char **argv)
         printf("Rank %u: Received Ping (# %i)\n", myRank, pingCount);
 
         // calculate and send pongCount
-        pongCount *= 0 - pingCount;
+        pongCount = 0 - pingCount;
         
         printf("Rank %u: Sending Pong (# %i)\n", myRank, pongCount);
 
