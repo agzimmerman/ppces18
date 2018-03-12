@@ -30,7 +30,7 @@ int main(int argc, char **argv)
     if (myRank == pinger)
     {
         // Send pingCount
-        printf("Sending Ping (# %i)\n", pingCount);
+        printf("Rank %u: Sending Ping (# %i)\n", myRank, pingCount);
 
         MPI_Send(&pingCount, count, MPI_INT, ponger, tag, MPI_COMM_WORLD);
 
@@ -38,9 +38,9 @@ int main(int argc, char **argv)
         // Receive pongCount
         MPI_Recv(&pongCount, count, MPI_INT, ponger, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-        printf("Received Pong (# %i)\n", pongCount);
+        printf("Rank %u: Received Pong (# %i)\n", myRank, pongCount);
 
-        pingCount = pongCount;
+        pingCount = 0 + pongCount;
     }
     // Do proper receive and send in any other process
     else
@@ -48,12 +48,12 @@ int main(int argc, char **argv)
         // Receive pingCount
         MPI_Recv(&pingCount, count, MPI_INT, pinger, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-        printf("Received Ping (# %i)\n", pingCount);
+        printf("Rank %u: Received Ping (# %i)\n", myRank, pingCount);
 
         // calculate and send pongCount
-        pongCount *= -pingCount;
+        pongCount *= 0 - pingCount;
         
-        printf("Sending Pong (# %i)\n", pongCount);
+        printf("Rank %u: Sending Pong (# %i)\n", myRank, pongCount);
 
         MPI_Send(&pongCount, count, MPI_INT, pinger, tag, MPI_COMM_WORLD);
 
